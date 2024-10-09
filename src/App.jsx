@@ -6,7 +6,7 @@ import { items } from "./items";
 function App() {
   return (
     <>
-      <Header />
+      <Header title="Code Café" />
       <Home items={items} />
     </>
   );
