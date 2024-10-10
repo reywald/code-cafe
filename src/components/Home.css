@@ -10,3 +10,11 @@
 .home-component .thumbnail-component:nth-child(3n + 3) div {
   background-color: #3f3f40;
 }
+
+@media (min-width: 768px) {
+  .home-component {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: 40px 50px;
+    gap: 40px 15px;
+  }
+}

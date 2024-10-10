@@ -17,6 +17,7 @@
 .thumbnail-component img {
   height: 106px;
   width: 106px;
+  transition: transform 333ms ease;
 }
 .thumbnail-component p {
   display: flex;
@@ -27,4 +28,8 @@
   font-size: 21px;
   text-align: center;
   white-space: nowrap;
+}
+
+.thumbnail-component:hover img {
+  transform: scale(1.2);
 }
