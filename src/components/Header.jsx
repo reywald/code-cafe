@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import CoffeeLogo from "../images/logo.svg";
 import "./Header.css";
@@ -6,8 +7,10 @@ import "./Header.css";
 function Header({ title }) {
   return (
     <header className="header-component">
-      <img src={CoffeeLogo} alt="Coffee logo" />
-      <h1>{title}</h1>
+      <Link to="/">
+        <img src={CoffeeLogo} alt="Coffee logo" />
+        <h1>{title}</h1>
+      </Link>
     </header>
   );
 }
