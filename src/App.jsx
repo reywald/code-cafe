@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Home from "./components/Home";
+import NotFound from "./components/NotFound";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -15,10 +17,13 @@ function App() {
   }, []);
 
   return (
-    <>
+    <Router>
       <Header title="Code Café" />
-      <Home items={items} />
-    </>
+      <Routes>
+        <Route path="/" element={<Home items={items} />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 }
 
