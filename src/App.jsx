@@ -23,17 +23,22 @@ function App() {
   return (
     <Router>
       <Header title="Code Café" />
-      <Routes>
-        <Route path="/details" element={<Details items={items} />}>
-          <Route path=":id" element={<DetailItem />} />
-          <Route index element={<div>No Item Selected</div>} />
-        </Route>
-        <Route path="/" element={<Home items={items} />} />
-        <Route path="*" element={<NotFound />} />
-        <Route path="/rewards" element={<Rewards />}>
-          <Route path=":tier" element={<Tier />} />
-        </Route>
-      </Routes>
+
+      {items.length === 0 ? (
+        <div>Loading...</div>
+      ) : (
+        <Routes>
+          <Route path="/details" element={<Details items={items} />}>
+            <Route path=":id" element={<DetailItem items={items} />} />
+            <Route index element={<div>No Item Selected</div>} />
+          </Route>
+          <Route path="/" element={<Home items={items} />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/rewards" element={<Rewards />}>
+            <Route path=":tier" element={<Tier />} />
+          </Route>
+        </Routes>
+      )}
     </Router>
   );
 }
