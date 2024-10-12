@@ -16,7 +16,7 @@ function Header({ title, cart }) {
       </Link>
 
       <div className="menu">
-        <Link to="#todo">
+        <Link to="/cart">
           <img src={CartIcon} alt="Cart" />
           <div className="badge">{cartQuantity}</div>
         </Link>
@@ -27,10 +27,12 @@ function Header({ title, cart }) {
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
-  cart: PropTypes.arrayOf(PropTypes.shape({
-    itemId: PropTypes.string.isRequired,
-    quantity: PropTypes.number.isRequired,
-  })).isRequired,
+  cart: PropTypes.arrayOf(
+    PropTypes.shape({
+      itemId: PropTypes.string.isRequired,
+      quantity: PropTypes.number.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Header;

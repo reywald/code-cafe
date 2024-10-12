@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { itemImages } from "../items";
 import ItemType from "../types/item";
 import "./DetailItem.css";
-import { CartTypes } from "../../reducers/cartReducer";
 
 function DetailItem({ addToCart, items }) {
   const { id } = useParams();
