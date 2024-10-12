@@ -4,10 +4,15 @@ import PropTypes from "prop-types";
 import { itemImages } from "../items";
 import ItemType from "../types/item";
 import "./DetailItem.css";
+import { CartTypes } from "../../reducers/cartReducer";
 
-function DetailItem({ items }) {
+function DetailItem({ addToCart, items }) {
   const { id } = useParams();
   const detailItem = items.find((item) => item.itemId === id);
+
+  const addItemToCart = () => {
+    addToCart(detailItem.itemId);
+  };
 
   return (
     <div className="detail-item-component">
@@ -22,6 +27,7 @@ function DetailItem({ items }) {
           <h2>{detailItem.title}</h2>
           {detailItem.description && <h6>{detailItem.description}</h6>}
           <div>${(detailItem.salePrice ?? detailItem.price).toFixed(2)}</div>
+          <button onClick={addItemToCart}>Add to Cart</button>
         </>
       ) : (
         <h2>Unknown Item</h2>
@@ -31,6 +37,7 @@ function DetailItem({ items }) {
 }
 
 DetailItem.propTypes = {
+  addToCart: PropTypes.func.isRequired,
   items: PropTypes.arrayOf(ItemType).isRequired,
 };
 
