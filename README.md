@@ -1,8 +1,16 @@
-# React + Vite
+# Code Cafe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project builds a React + Vite frontend application for ordering cafe refreshments. Features include:
+1. Viewing products
+2. Viewing each product's details: 
+  - Title
+  - Description
+  - Price
+  - Sale Price
+  - Image
+3. Adding a product to cart
+4. Viewing the Cart
+5. Removing a product from cart
+6. Increasing added product quantity on the cart
+7. Decreasing added product quantity on the cart
+8. Checkout Form filling and validation
