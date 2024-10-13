@@ -1,6 +1,6 @@
 export const initialCartState = [];
 
-export const CartTypes = { ADD: "ADD", REMOVE: "REMOVE" };
+export const CartTypes = { ADD: "ADD", DECREASE: "DECREASE", REMOVE: "REMOVE" };
 
 const findItem = (cart, itemId) => cart.find((item) => item.itemId === itemId);
 
@@ -15,6 +15,15 @@ export const cartReducer = (state, action) => {
         );
       }
       return [...state, { itemId: action.itemId, quantity: 1 }];
+
+    case CartTypes.DECREASE:
+      const item = findItem(state, action.itemId);
+      const newQuantity = item.quantity - 1;
+      if (newQuantity)
+        return state.map((i) =>
+          i.itemId === item.itemId ? { ...i, quantity: newQuantity } : i
+        );
+      else return state.filter((item) => item.itemId !== action.itemId);
 
     case CartTypes.REMOVE:
       return state.filter((item) => item.itemId !== action.itemId);
