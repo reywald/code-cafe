@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { PatternFormat } from "react-number-format";
 
 import "./Cart.css";
 import CartRow from "./CartRow";
@@ -91,10 +92,15 @@ function Cart({ cart, dispatch, items }) {
             </label>
             <label htmlFor="phone">
               Phone Number
-              <input
+              {/* <input
                 type="tel"
                 id="phone"
                 onChange={(event) => setFormattedPhone(event.target.value)}
+                value={phone}
+              /> */}
+              <PatternFormat
+                format="###-###-####"
+                onValueChange={(values, sourceInfo) => setPhone(values.value)}
                 value={phone}
               />
             </label>
@@ -110,7 +116,9 @@ function Cart({ cart, dispatch, items }) {
                 required
               />
             </label>
-            <button type="submit" disabled={!isFormValid}>Order Now</button>
+            <button type="submit" disabled={!isFormValid}>
+              Order Now
+            </button>
           </form>
         </>
       )}
