@@ -40,7 +40,13 @@ function Cart({ cart, dispatch, items }) {
         phone,
         zipCode,
       });
+      setName("");
+      setZipCode("");
+      setPhone("");
       console.log("Order submitted");
+
+      const response = await axios.get("/api/orders");
+      console.log("Order number: ", response?.data?.length);
     } catch (error) {
       console.error("Error submitting the order", error);
     } finally {

@@ -14,3 +14,5 @@ This project builds a React + Vite frontend application for ordering cafe refres
 6. Increasing added product quantity on the cart
 7. Decreasing added product quantity on the cart
 8. Checkout Form filling and validation
+9. Storing/retrieving cart contents from LocalStorage
+10. Submitting Orders
