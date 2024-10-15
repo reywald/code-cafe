@@ -1,7 +1,7 @@
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useRef, useState } from "react";
-import { PatternFormat } from "react-number-format";
+// import { PatternFormat } from "react-number-format";
 
 import "./Cart.css";
 import CartRow from "./CartRow";
@@ -13,6 +13,8 @@ function Cart({ cart, dispatch, items }) {
   const [zipCode, setZipCode] = useState("");
   const [isEmployeeOfTheMonth, setIsEmployeeOfTheMonth] = useState(false);
   const debounceRef = useRef(null);
+  const zipRef = useRef(null);
+  const nameRef = useRef(null);
 
   const subTotal = isEmployeeOfTheMonth
     ? 0
@@ -32,14 +34,17 @@ function Cart({ cart, dispatch, items }) {
     // TODO
   };
 
-  // const setFormattedPhone = (newNumber) => {
-  //   const digits = newNumber.replace(/\D/g, "");
-  //   const formatted = digits
-  //     .split("")
-  //     .map((c, idx) => (idx === 2 || idx === 5 ? `${c}-` : c))
-  //     .join("");
-  //   setPhone(formatted);
-  // };
+  const setFormattedPhone = (newNumber) => {
+    const digits = newNumber.replace(/\D/g, "");
+    const formatted = digits
+      .split("")
+      .map((c, idx) => (idx === 2 || idx === 5 ? `${c}-` : c))
+      .join("");
+
+    if (digits.length === 10) zipRef.current.focus();
+
+    setPhone(formatted);
+  };
 
   const onNameChange = (newName) => {
     setName(newName);
@@ -53,6 +58,12 @@ function Cart({ cart, dispatch, items }) {
         })
         .catch(console.error);
     }, 300);
+  };
+
+  const onZipCodeChange = (newZipCode) => {
+    setZipCode(newZipCode);
+    if (newZipCode.length === 5 && !nameRef.current.value)
+      nameRef.current.focus();
   };
 
   return (
@@ -104,22 +115,24 @@ function Cart({ cart, dispatch, items }) {
                 type="text"
                 onChange={(event) => onNameChange(event.target.value)}
                 value={name}
+                ref={nameRef}
                 required
               />
             </label>
             <label htmlFor="phone">
               Phone Number
-              {/* <input
+              <input
                 type="tel"
                 id="phone"
                 onChange={(event) => setFormattedPhone(event.target.value)}
                 value={phone}
-              /> */}
-              <PatternFormat
+                aria-label="Enter your phone number. After a phone number is entered, you will automatically be moved to the next field."
+              />
+              {/* <PatternFormat
                 format="###-###-####"
                 onValueChange={(values, sourceInfo) => setPhone(values.value)}
                 value={phone}
-              />
+              /> */}
             </label>
             <label htmlFor="zipcode">
               ZIP Code
@@ -128,8 +141,9 @@ function Cart({ cart, dispatch, items }) {
                 id="zipcode"
                 maxLength="5"
                 inputMode="numeric"
-                onChange={(event) => setZipCode(event.target.value)}
+                onChange={(event) => onZipCodeChange(event.target.value)}
                 value={zipCode}
+                ref={zipRef}
                 required
               />
             </label>
