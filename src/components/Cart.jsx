@@ -1,5 +1,6 @@
+import axios from "axios";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { PatternFormat } from "react-number-format";
 
 import "./Cart.css";
@@ -10,11 +11,15 @@ function Cart({ cart, dispatch, items }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [isEmployeeOfTheMonth, setIsEmployeeOfTheMonth] = useState(false);
+  const debounceRef = useRef(null);
 
-  const subTotal = cart.reduce((accum, cartItem) => {
-    const item = items.find((i) => i.itemId === cartItem.itemId);
-    return accum + (item.salePrice ?? item.price) * cartItem.quantity;
-  }, 0);
+  const subTotal = isEmployeeOfTheMonth
+    ? 0
+    : cart.reduce((accum, cartItem) => {
+        const item = items.find((i) => i.itemId === cartItem.itemId);
+        return accum + (item.salePrice ?? item.price) * cartItem.quantity;
+      }, 0);
 
   const taxPercentage = +(zipCode[0] ?? "0") + 1;
   const taxRate = taxPercentage / 100;
@@ -24,18 +29,30 @@ function Cart({ cart, dispatch, items }) {
 
   const submitOrder = (event) => {
     event.preventDefault();
-    console.log("name: ", name);
-    console.log("phone: ", phone);
-    console.log("zipcode: ", zipCode);
+    // TODO
   };
 
-  const setFormattedPhone = (newNumber) => {
-    const digits = newNumber.replace(/\D/g, "");
-    const formatted = digits
-      .split("")
-      .map((c, idx) => (idx === 2 || idx === 5 ? `${c}-` : c))
-      .join("");
-    setPhone(formatted);
+  // const setFormattedPhone = (newNumber) => {
+  //   const digits = newNumber.replace(/\D/g, "");
+  //   const formatted = digits
+  //     .split("")
+  //     .map((c, idx) => (idx === 2 || idx === 5 ? `${c}-` : c))
+  //     .join("");
+  //   setPhone(formatted);
+  // };
+
+  const onNameChange = (newName) => {
+    setName(newName);
+    if (debounceRef.current) clearInterval(debounceRef.current);
+
+    debounceRef.current = setTimeout(() => {
+      axios
+        .get(`/api/employees/isEmployeeOfTheMonth?name=${newName}`)
+        .then((response) => {
+          setIsEmployeeOfTheMonth(response?.data?.isEmployeeOfTheMonth);
+        })
+        .catch(console.error);
+    }, 300);
   };
 
   return (
@@ -85,7 +102,7 @@ function Cart({ cart, dispatch, items }) {
               <input
                 id="name"
                 type="text"
-                onChange={(event) => setName(event.target.value)}
+                onChange={(event) => onNameChange(event.target.value)}
                 value={name}
                 required
               />

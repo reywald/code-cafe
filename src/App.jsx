@@ -16,10 +16,28 @@ import {
   initialCartState,
 } from "../reducers/cartReducer";
 
+const storageKey = "cart";
+
 function App() {
   const [items, setItems] = useState([]);
-  const [cart, dispatch] = useReducer(cartReducer, initialCartState);
+  const [cart, dispatch] = useReducer(
+    cartReducer,
+    initialCartState,
+    (initialState) => {
+      try {
+        const storedCart = JSON.parse(localStorage.getItem(storageKey));
+        return storedCart || initialState;
+      } catch (error) {
+        console.log("Error parsing cart", error);
+        return initialState;
+      }
+    }
+  );
   const addToCart = (itemId) => dispatch({ type: CartTypes.ADD, itemId });
+
+  useEffect(() => {
+    localStorage.setItem(storageKey, JSON.stringify(cart));
+  }, [cart]);
 
   useEffect(() => {
     axios
