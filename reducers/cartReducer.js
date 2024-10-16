@@ -1,6 +1,11 @@
 export const initialCartState = [];
 
-export const CartTypes = { ADD: "ADD", DECREASE: "DECREASE", REMOVE: "REMOVE" };
+export const CartTypes = {
+  ADD: "ADD",
+  DECREASE: "DECREASE",
+  EMPTY: "EMPTY",
+  REMOVE: "REMOVE",
+};
 
 const findItem = (cart, itemId) => cart.find((item) => item.itemId === itemId);
 
@@ -24,6 +29,9 @@ export const cartReducer = (state, action) => {
           i.itemId === item.itemId ? { ...i, quantity: newQuantity } : i
         );
       else return state.filter((item) => item.itemId !== action.itemId);
+
+    case CartTypes.EMPTY:
+      return [];
 
     case CartTypes.REMOVE:
       return state.filter((item) => item.itemId !== action.itemId);
