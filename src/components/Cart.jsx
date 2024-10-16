@@ -7,6 +7,7 @@ import "./Cart.css";
 import CartRow from "./CartRow";
 import ItemType from "../types/item";
 import Alert from "./Alert";
+import CloseableAlert from "./CloseableAlert";
 import { CartTypes } from "../../reducers/cartReducer";
 
 function Cart({ cart, dispatch, items }) {
@@ -88,16 +89,20 @@ function Cart({ cart, dispatch, items }) {
       nameRef.current.focus();
   };
 
+  const onClose = () => {
+    setApiError("");
+  }
+
   return (
     <div className="cart-component">
       <Alert visible={showSuccessAlert} type="success">
         Thank you for your order.
       </Alert>
-      <Alert visible={!!apiError} type="error">
+      <CloseableAlert visible={!!apiError} type="error" onClose={onClose}>
         <p>There was an error submitting your order.</p>
         <p>{apiError}</p>
         <p>Please try again.</p>
-      </Alert>
+      </CloseableAlert>
       <h2>Your Cart</h2>
 
       {cart.length === 0 ? (
