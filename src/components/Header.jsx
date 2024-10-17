@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+import UserDetails from "./UserDetails";
 import CoffeeLogo from "../images/logo.svg";
 import CartIcon from "../images/cart.svg";
 import "./Header.css";
@@ -21,6 +22,8 @@ function Header({ title, cart }) {
           <div className="badge">{cartQuantity}</div>
         </Link>
       </div>
+
+      <UserDetails />
     </header>
   );
 }
