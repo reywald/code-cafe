@@ -22,9 +22,15 @@ function UserDetails() {
     <div className="user-details-component">
       {currentUser.username ? (
         <div>
+          {currentUser.access === "associate" && (
+            <Link to="/orders">Orders</Link>
+          )}
+
           <img src={Profile} alt="profile" />
           <p>{currentUser.username}</p>
-          <button type="button" onClick={logout}>Logout</button>
+          <button type="button" onClick={logout}>
+            Logout
+          </button>
         </div>
       ) : (
         <Link to="/login">Log In</Link>

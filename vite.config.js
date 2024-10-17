@@ -11,6 +11,11 @@ export default defineConfig({
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ""),
       },
+      "/ws-cafe": {
+        target: "http://localhost:3030",
+        changeOrigin: true,
+        ws: true,
+      },
     },
   },
 });
